@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import yfinance as yf
 from datetime import datetime
+import math
 
 app = FastAPI()
 
@@ -32,7 +33,7 @@ def calcular_preco_teto(ticker: str):
 
         media_dividendos = ultimos_5_anos.mean()
 
-        preco_teto = media_dividendos / taxa_esperada
+        preco_teto = math.ceil((media_dividendos / taxa_esperada) * 10) / 10
 
         resultado = {
             "cotacao_atual": round(cotacao_atual, 2),
